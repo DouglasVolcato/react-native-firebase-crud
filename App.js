@@ -1,45 +1,20 @@
-import { Text, View, TouchableOpacity, TextInput } from "react-native";
-import React, { useState } from "react";
-import { styles } from "./styles";
-import { addDoc, collection, getDoc } from "firebase/firestore";
-import { db } from "./components/config";
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ChatScreen from "./screens/ChatScreen";
+import LoginScreen from "./screens/LoginScreen";
 
-export default function App() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+const Stack = createNativeStackNavigator();
 
-  const createData = async () => {
-    await addDoc(collection(db, "users"), { username, email })
-      .then(() => console.log("Data created"))
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // getDoc(collection(db, "users"))
-    //   .then((data) => console.log(data))
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-  };
-
+function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>React Native Firebase CRUD</Text>
-      <TextInput
-        style={styles.input}
-        value={username}
-        placeholder="Username"
-        onChangeText={(text) => setUsername(text)}
-      />
-      <TextInput
-        style={styles.input}
-        value={email}
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={createData}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Chat" component={ChatScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+export default App;
