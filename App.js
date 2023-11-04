@@ -1,7 +1,7 @@
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./styles";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDoc } from "firebase/firestore";
 import { db } from "./components/config";
 
 export default function App() {
@@ -14,6 +14,12 @@ export default function App() {
       .catch((error) => {
         console.log(error);
       });
+
+    // getDoc(collection(db, "users"))
+    //   .then((data) => console.log(data))
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   return (
